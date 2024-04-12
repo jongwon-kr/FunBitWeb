@@ -59,10 +59,6 @@ public class TodoJpaController {
 		todo.setUsername(username);
 		todo.setId(null);
 		return todoRepository.save(todo);
-//		Todo createdTodo = todoService.addTodo(username, todo.getDescription(), 
-//				todo.getTargetDate(),todo.isDone() );
-		
-//		return createdTodo;
 	}
 
 }

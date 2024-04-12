@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 
@@ -24,11 +25,9 @@ public class Todo {
 	}
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
-
 	private String username;
-	
 	private String description;
 	private LocalDate targetDate;
 	private boolean done;
