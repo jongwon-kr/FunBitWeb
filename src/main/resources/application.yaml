@@ -1,0 +1,22 @@
+
+
+logging:
+  level:
+    org.springframework: info
+server:
+  port: 5000
+spring:
+  application:
+    name: FunBit
+  datasource:
+    url: jdbc:mysql://localhost:3306/databaseName
+    username: jongwon
+    password: 1234
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    ddl-auto: none
+    generate-ddl: false
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
