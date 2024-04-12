@@ -1,11 +1,11 @@
-
-
 logging:
   level:
     org.springframework: info
 server:
   port: 5000
 spring:
+  main:
+    banner-mode: off
   application:
     name: FunBit
   datasource:
