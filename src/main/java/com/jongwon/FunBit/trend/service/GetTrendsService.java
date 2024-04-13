@@ -5,14 +5,16 @@ import com.jongwon.FunBit.trend.Trend;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import jakarta.transaction.Transactional;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GetTrendsService {
@@ -23,7 +25,6 @@ public class GetTrendsService {
     public List<Trend> getTrends() {
         ChromeDriver driver;
         WebDriverManager.chromedriver().setup();
-
         CoinInfo coinInfo;
 
         ChromeOptions options = new ChromeOptions();
@@ -34,11 +35,11 @@ public class GetTrendsService {
         driver = new ChromeDriver(options);
 
         driver.get("https://trends.google.co.kr/trends/trendingsearches/daily?geo=KR&hl=ko");
+        Actions actions = new Actions(driver);
         WebElement todayElement;
         WebElement selectElement;
         WebElement imgElement;
         todayElement = driver.findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]"));
-        String date = todayElement.findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]/div")).getText().split("\n")[0];
         List<Trend> trends = new ArrayList<>();
         int size = todayElement.getText().split("keyboard_arrow_down").length;
         for (int i = 0; i < size; i++) {
@@ -67,18 +68,40 @@ public class GetTrendsService {
                             + (i + 1)
                             + "]/feed-item/ng-include/div/ng-include/div/feed-item-carousel/div/div[2]/div/ng-transclude/a[1]/div/div[1]/img"))
                     .getAttribute("src");
-            trendOption.add(imgLink);
             String articleLink = todayElement
                     .findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]/md-list["
                             + (i + 1)
                             + "]/feed-item/ng-include/div/ng-include/div/feed-item-carousel/div/div[2]/div/ng-transclude/a[1]\n"))
                     .getAttribute("href");
-            trendOption.add(articleLink);
-            for (String s : trendOption) {
-                System.out.println("ssssssss = " + s);
+            Trend trend = new Trend();
+            LocalDate currentDate = LocalDate.now();
+
+            // 년, 월, 일 한 번에 얻기
+            int year = currentDate.getYear();
+            int month = currentDate.getMonthValue();
+            int day = currentDate.getDayOfMonth();
+
+            // 원하는 형식으로 조합하여 문자열 만들기
+            String formattedDate = String.format("%04d-%02d-%02d", year, month, day);
+
+            trend.setSeq(Integer.parseInt(trendOption.get(0)));
+            trend.setKeyword(trendOption.get(1));
+            trend.setArticle(trendOption.get(2));
+            trend.setAgoTime(trendOption.get(3));
+            trend.setVolume(trendOption.get(4));
+            trend.setDate(formattedDate);
+            trend.setArticleLink(articleLink);
+            trend.setImgLink(imgLink);
+            System.out.println(trend.toString());
+            trends.add(trend);
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-            trends.add(new Trend(todosCount++, Integer.parseInt(trendOption.get(0)), date, trendOption.get(1), trendOption.get(2), trendOption.get(3),
-                    trendOption.get(4), trendOption.get(5), trendOption.get(6)));
+            actions.moveToElement(selectElement);
+            actions.perform();
+            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -250);");
             selectElement.click();
         }
 

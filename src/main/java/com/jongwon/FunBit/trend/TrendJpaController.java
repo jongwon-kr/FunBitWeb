@@ -5,6 +5,7 @@ import com.jongwon.FunBit.trend.service.GetTrendsService;
 import com.jongwon.FunBit.trend.service.TrendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,11 +25,16 @@ public class TrendJpaController {
     }
 
     @GetMapping("/getTrends")
-    public String getTrends(){
-        List<Trend> trends =  getTrendsService.getTrends();
+    public String getTrends() {
+        List<Trend> trends = getTrendsService.getTrends();
         for (Trend trend : trends) {
             trendRepository.save(trend);
         }
         return "Trends 불러오기 완료";
+    }
+
+    @GetMapping("/getTrends/{date}")
+    public List<Trend> getTodayTrends(@PathVariable String date) {
+        return trendRepository.findByDate(date);
     }
 }
