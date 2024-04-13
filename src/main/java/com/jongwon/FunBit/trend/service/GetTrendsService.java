@@ -72,6 +72,7 @@ public class GetTrendsService {
             }
             String imgLink;
             String articleLink;
+            // 이미지 없을 때 처리 필요
             if(size==1){
                 imgLink = todayElement
                         .findElement(By.xpath(onlyTrendPath)).getAttribute("src");
