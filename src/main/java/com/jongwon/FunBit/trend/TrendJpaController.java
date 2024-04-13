@@ -24,7 +24,7 @@ public class TrendJpaController {
         this.trendService = trendService;
     }
 
-    @GetMapping("/getTrends")
+    @GetMapping("/fetch/get-trends")
     public String getTrends() {
         List<Trend> trends = getTrendsService.getTrends();
         for (Trend trend : trends) {
@@ -33,7 +33,7 @@ public class TrendJpaController {
         return "Trends 불러오기 완료";
     }
 
-    @GetMapping("/getTrends/{date}")
+    @GetMapping("/get-trends/{date}")
     public List<Trend> getTodayTrends(@PathVariable String date) {
         return trendRepository.findByDate(date);
     }

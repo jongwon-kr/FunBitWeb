@@ -28,13 +28,11 @@ public class CoinInfoJpaController {
     }
 
     // 코인 정보 요청
-    @GetMapping("/coinInfo/market/{market}")
+    @GetMapping("/coin-info/{market}")
     public CoinInfo retrieveCoinInfo(@PathVariable String market) {
-        if(!coinInfoRepository.findById(market).isEmpty()){
-            return coinInfoRepository.findById(market).get();
-        }else{
-            return getCoinInfoService.getCoinInfo(market);
-        }
+
+        return getCoinInfoService.getCoinInfo(market);
+
     }
 
     @DeleteMapping("/coinInfos/{market}")
@@ -43,19 +41,19 @@ public class CoinInfoJpaController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/coinInfo/add/{market}")
+    @GetMapping("/coinInfos/add/{market}")
     public String addCoinInfo(@PathVariable String market) {
         try {
             CoinInfo coinInfo = getCoinInfoService.getCoinInfo(market);
             coinInfoRepository.save(coinInfo);
-            return coinInfo.getMarket()+" 코인 정보 로딩 완료";
+            return coinInfo.getMarket() + " 코인 정보 로딩 완료";
         } catch (Exception e) {
             return "에러 메시지: " + e.getMessage();
         }
     }
 
     // 모든 코인 정보들 패치
-    @GetMapping("/coinInfos/fetch")
+    @GetMapping("/fetch/coinInfos")
     public String fetchCoinInfos() {
         try {
             List<CoinInfo> coinInfoList = getCoinInfoService.getCoinInfos();

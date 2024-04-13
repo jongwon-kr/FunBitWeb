@@ -54,15 +54,11 @@ public class JwtSecurityConfig {
                                         SessionCreationPolicy.STATELESS)) // (2)
                 .authorizeHttpRequests(
                         auth ->
-                                auth.requestMatchers("/", //#CHANGE
-                                                "/authenticate", "/actuator", "/actuator/*")
-                                        .permitAll()
-                                        .requestMatchers("/h2-console/**")
-                                        .permitAll()
-                                        .requestMatchers(HttpMethod.OPTIONS,"/**")
-                                        .permitAll()
-                                        .anyRequest()
-                                        .authenticated()) // (3)
+                                auth
+                                        .requestMatchers("/get-trends/**").permitAll()
+                                        .requestMatchers("/coin-info/**").permitAll()
+                                        .requestMatchers("/authenticate", "/actuator", "/actuator/**").permitAll() // 다른 특정 엔드포인트는 허용
+                                        .anyRequest().authenticated()) // 나머지는 인증을 요구
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults())) // (4)
                 .exceptionHandling(
                         (ex) ->

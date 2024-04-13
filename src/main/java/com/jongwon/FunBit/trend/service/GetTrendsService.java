@@ -6,6 +6,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import jakarta.transaction.Transactional;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -39,13 +40,19 @@ public class GetTrendsService {
         WebElement todayElement;
         WebElement selectElement;
         WebElement imgElement;
+        String onlyTrendPath = "/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]/md-list/feed-item/ng-include";
         todayElement = driver.findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]"));
         List<Trend> trends = new ArrayList<>();
         int size = todayElement.getText().split("keyboard_arrow_down").length;
         for (int i = 0; i < size; i++) {
             List<String> trendOption = new ArrayList<>();
             int j = 0;
-            selectElement = todayElement.findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]/md-list[" + (i + 1) + "]/feed-item/ng-include"));
+            if (size == 1) {
+                selectElement = todayElement.findElement(By.xpath(onlyTrendPath));
+            } else {
+                selectElement = todayElement.findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]/md-list[" + (i + 1) + "]/feed-item/ng-include"));
+
+            }
             for (String s : selectElement.getText().split("\n")) {
                 if (j < 5) {
                     trendOption.add(s);
@@ -63,16 +70,26 @@ public class GetTrendsService {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            String imgLink = todayElement
-                    .findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]/md-list["
-                            + (i + 1)
-                            + "]/feed-item/ng-include/div/ng-include/div/feed-item-carousel/div/div[2]/div/ng-transclude/a[1]/div/div[1]/img"))
-                    .getAttribute("src");
-            String articleLink = todayElement
-                    .findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]/md-list["
-                            + (i + 1)
-                            + "]/feed-item/ng-include/div/ng-include/div/feed-item-carousel/div/div[2]/div/ng-transclude/a[1]\n"))
-                    .getAttribute("href");
+            String imgLink;
+            String articleLink;
+            if(size==1){
+                imgLink = todayElement
+                        .findElement(By.xpath(onlyTrendPath)).getAttribute("src");
+                articleLink = todayElement
+                        .findElement(By.xpath(onlyTrendPath)).getAttribute("href");
+            }else{
+                imgLink = todayElement
+                        .findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]/md-list["
+                                + (i + 1)
+                                + "]/feed-item/ng-include/div/ng-include/div/feed-item-carousel/div/div[2]/div/ng-transclude/a[1]/div/div[1]/img"))
+                        .getAttribute("src");
+                articleLink= todayElement
+                        .findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]/md-list["
+                                + (i + 1)
+                                + "]/feed-item/ng-include/div/ng-include/div/feed-item-carousel/div/div[2]/div/ng-transclude/a[1]\n"))
+                        .getAttribute("href");
+            }
+
             Trend trend = new Trend();
             LocalDate currentDate = LocalDate.now();
 
@@ -101,8 +118,10 @@ public class GetTrendsService {
             }
             actions.moveToElement(selectElement);
             actions.perform();
-            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -250);");
             selectElement.click();
+            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -250);");
+
+
         }
 
 
