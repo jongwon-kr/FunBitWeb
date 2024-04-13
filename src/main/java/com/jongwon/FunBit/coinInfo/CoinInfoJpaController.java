@@ -1,6 +1,5 @@
-package com.jongwon.FunBit.coinInfo.controller;
+package com.jongwon.FunBit.coinInfo;
 
-import com.jongwon.FunBit.coinInfo.model.CoinInfo;
 import com.jongwon.FunBit.coinInfo.repository.CoinInfoRepository;
 import com.jongwon.FunBit.coinInfo.service.CoinInfoService;
 import com.jongwon.FunBit.coinInfo.service.GetCoinInfoService;
@@ -14,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-public class CoinInfoController {
+public class CoinInfoJpaController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
     private CoinInfoService coinInfoService;
@@ -22,7 +21,7 @@ public class CoinInfoController {
     private CoinInfoRepository coinInfoRepository;
 
     @Autowired
-    public CoinInfoController(CoinInfoService coinInfoService, GetCoinInfoService getCoinInfos, CoinInfoRepository coinInfoRepository) {
+    public CoinInfoJpaController(CoinInfoService coinInfoService, GetCoinInfoService getCoinInfos, CoinInfoRepository coinInfoRepository) {
         this.coinInfoService = coinInfoService;
         this.getCoinInfoService = getCoinInfos;
         this.coinInfoRepository = coinInfoRepository;

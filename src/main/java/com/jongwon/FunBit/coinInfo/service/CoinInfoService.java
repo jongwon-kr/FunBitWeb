@@ -1,6 +1,6 @@
 package com.jongwon.FunBit.coinInfo.service;
 
-import com.jongwon.FunBit.coinInfo.model.CoinInfo;
+import com.jongwon.FunBit.coinInfo.CoinInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

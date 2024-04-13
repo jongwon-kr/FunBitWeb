@@ -1,4 +1,4 @@
-package com.jongwon.FunBit.coinInfo.model;
+package com.jongwon.FunBit.coinInfo;
 
 
 import jakarta.persistence.Column;
