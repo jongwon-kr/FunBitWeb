@@ -4,10 +4,7 @@ import com.jongwon.FunBit.coinInfo.CoinInfo;
 import com.jongwon.FunBit.trend.Trend;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import jakarta.transaction.Transactional;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -72,25 +69,19 @@ public class GetTrendsService {
             }
             String imgLink;
             String articleLink;
-            // 이미지 없을 때 처리 필요
-            if(size==1){
+            try {
                 imgLink = todayElement
-                        .findElement(By.xpath(onlyTrendPath)).getAttribute("src");
-                articleLink = todayElement
-                        .findElement(By.xpath(onlyTrendPath)).getAttribute("href");
-            }else{
-                imgLink = todayElement
-                        .findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]/md-list["
-                                + (i + 1)
-                                + "]/feed-item/ng-include/div/ng-include/div/feed-item-carousel/div/div[2]/div/ng-transclude/a[1]/div/div[1]/img"))
+                        .findElement(By.xpath("//a[contains(@title, \""+trendOption.get(2)+"\")]"))
+                        .findElement(By.xpath("//div[@class='carousel-image-wrapper']"))
+                        .findElement(By.tagName("img"))
                         .getAttribute("src");
-                articleLink= todayElement
-                        .findElement(By.xpath("/html/body/div[3]/div[2]/div/div[2]/div/div[1]/ng-include/div/div/div/div[1]/md-list["
-                                + (i + 1)
-                                + "]/feed-item/ng-include/div/ng-include/div/feed-item-carousel/div/div[2]/div/ng-transclude/a[1]\n"))
-                        .getAttribute("href");
+            } catch (NoSuchElementException e) {
+                imgLink = "noimg";
+                System.out.println("이미지가 없습니다..");
             }
-
+            articleLink= todayElement
+                    .findElement(By.xpath("//a[contains(@title, \""+trendOption.get(2)+"\")]"))
+                    .getAttribute("href");
             Trend trend = new Trend();
             LocalDate currentDate = LocalDate.now();
 
@@ -117,12 +108,8 @@ public class GetTrendsService {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            actions.moveToElement(selectElement);
-            actions.perform();
+            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 100);");
             selectElement.click();
-            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -250);");
-
-
         }
 
 

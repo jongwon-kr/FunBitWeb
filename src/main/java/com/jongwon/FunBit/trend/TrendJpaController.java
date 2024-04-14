@@ -26,6 +26,7 @@ public class TrendJpaController {
 
     @GetMapping("/fetch/get-trends")
     public String getTrends() {
+
         List<Trend> trends = getTrendsService.getTrends();
         for (Trend trend : trends) {
             trendRepository.save(trend);

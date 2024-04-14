@@ -55,6 +55,7 @@ public class JwtSecurityConfig {
                 .authorizeHttpRequests(
                         auth ->
                                 auth
+                                        .requestMatchers("/fetch/**").permitAll()
                                         .requestMatchers("/get-trends/**").permitAll()
                                         .requestMatchers("/coin-info/**").permitAll()
                                         .requestMatchers("/authenticate", "/actuator", "/actuator/**").permitAll() // 다른 특정 엔드포인트는 허용
