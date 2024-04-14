@@ -4,6 +4,8 @@ import com.jongwon.FunBit.trend.repository.TrendRepository;
 import com.jongwon.FunBit.trend.service.GetTrendsService;
 import com.jongwon.FunBit.trend.service.TrendService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@EnableScheduling
 public class TrendJpaController {
 
     private TrendRepository trendRepository;
@@ -25,9 +28,10 @@ public class TrendJpaController {
     }
 
     @GetMapping("/fetch/get-trends")
+    @Scheduled(cron = "0 13 0/1 * * *")
     public String getTrends() {
-
         List<Trend> trends = getTrendsService.getTrends();
+        trendRepository.deleteAll();
         for (Trend trend : trends) {
             trendRepository.save(trend);
         }
