@@ -69,9 +69,25 @@ public class GetTrendsService {
             }
             String imgLink;
             String articleLink;
+            String quot;
+            String findLink;
+            if (trendOption.get(2).contains("\'")) {
+                quot = "\"";
+            } else if(trendOption.get(2).contains("\"")){
+                quot = "\'";
+            }else{
+                quot = "\"";
+
+            }
+            findLink = quot + trendOption.get(2) + quot;
+            if(trendOption.get(2).contains("\"") && trendOption.get(2).contains("\'")){
+                quot = "\'";
+                findLink = quot+ trendOption.get(2).split("\"")[0]+quot;
+            }
+
             try {
                 imgLink = todayElement
-                        .findElement(By.xpath("//a[contains(@title, \""+trendOption.get(2)+"\")]"))
+                        .findElement(By.xpath("//a[contains(@title, "+findLink+")]"))
                         .findElement(By.xpath("//div[@class='carousel-image-wrapper']"))
                         .findElement(By.tagName("img"))
                         .getAttribute("src");
@@ -79,8 +95,8 @@ public class GetTrendsService {
                 imgLink = "noimg";
                 System.out.println("이미지가 없습니다..");
             }
-            articleLink= todayElement
-                    .findElement(By.xpath("//a[contains(@title, \""+trendOption.get(2)+"\")]"))
+            articleLink = todayElement
+                    .findElement(By.xpath("//a[contains(@title, "+findLink+")]"))
                     .getAttribute("href");
             Trend trend = new Trend();
             LocalDate currentDate = LocalDate.now();

@@ -2,7 +2,6 @@ package com.jongwon.FunBit.trend;
 
 import com.jongwon.FunBit.trend.repository.TrendRepository;
 import com.jongwon.FunBit.trend.service.GetTrendsService;
-import com.jongwon.FunBit.trend.service.TrendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,13 +17,11 @@ public class TrendJpaController {
 
     private TrendRepository trendRepository;
     private GetTrendsService getTrendsService;
-    private TrendService trendService;
 
     @Autowired
-    public TrendJpaController(TrendRepository trendRepository, GetTrendsService getTrendsService, TrendService trendService) {
+    public TrendJpaController(TrendRepository trendRepository, GetTrendsService getTrendsService) {
         this.trendRepository = trendRepository;
         this.getTrendsService = getTrendsService;
-        this.trendService = trendService;
     }
 
     @GetMapping("/fetch/get-trends")

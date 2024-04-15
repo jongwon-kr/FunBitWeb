@@ -60,5 +60,4 @@ public class TodoJpaController {
 		todo.setId(null);
 		return todoRepository.save(todo);
 	}
-
 }
