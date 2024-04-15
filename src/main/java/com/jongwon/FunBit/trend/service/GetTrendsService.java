@@ -81,7 +81,7 @@ public class GetTrendsService {
             }
             findLink = quot + trendOption.get(2) + quot;
             if(trendOption.get(2).contains("\"") && trendOption.get(2).contains("\'")){
-                quot = "\'";
+                quot = "\"";
                 findLink = quot+ trendOption.get(2).split("\"")[0]+quot;
             }
 
