@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8-oracle
+    container_name: mysql
+    restart: "always"
+    environment:
+      MYSQL_ROOT_PASSWORD: dummypassword
+      MYSQL_DATABASE: social-media-database
+      MYSQL_USER: social-media-user
+      MYSQL_PASSWORD: dummypassword
+      TZ: Asia/Seoul
+    ports:
+      - "3306:3306"  # 호스트 포트:컨테이너 포트
+    volumes:
+      - ./db/mysql/data:/var/lib/mysql
+      - ./db/mysql/init:/docker-entrypoint-initdb.d
+
+  java_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: java_app
+    restart: "always"
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    ports:
+      - "5000:5000"  # 호스트 포트:컨테이너 포트
+    environment:
+      DATABASE_URL: jdbc:mysql://mysql:3306/social-media-database
+      DATABASE_USERNAME: social-media-user
+      DATABASE_PASSWORD: dummypassword
+
+  chrome:
+    image: selenium/standalone-chrome:latest
+    hostname: chrome
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    privileged: true
+    shm_size: 2g
+  framework:
+    build: .
+    depends_on:
+      - chrome
+volumes:
+  mysql_data:
+
+

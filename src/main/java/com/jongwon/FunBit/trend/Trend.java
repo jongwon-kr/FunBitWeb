@@ -1,38 +1,14 @@
 package com.jongwon.FunBit.trend;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
+@Getter
+@Setter
 public class Trend {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    int seq;
-    String keyword;
-    String article;
-    String agoTime;
-    String volume;
-    String date;
-    String articleLink;
-    String imgLink;
-
-    public Trend() {
-
-    }
-
-    public Trend(int id, int seq, String keyword, String article, String agoTime, String volume, String date, String articleLink, String imgLink) {
-        this.id = id;
-        this.seq = seq;
-        this.keyword = keyword;
-        this.article = article;
-        this.agoTime = agoTime;
-        this.volume = volume;
-        this.date = date;
-        this.articleLink = articleLink;
-        this.imgLink = imgLink;
-    }
-
 
     public int getId() {
         return id;
@@ -48,14 +24,6 @@ public class Trend {
 
     public void setSeq(int seq) {
         this.seq = seq;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getKeyword() {
@@ -74,14 +42,6 @@ public class Trend {
         this.article = article;
     }
 
-    public String getVolume() {
-        return volume;
-    }
-
-    public void setVolume(String volume) {
-        this.volume = volume;
-    }
-
     public String getAgoTime() {
         return agoTime;
     }
@@ -90,8 +50,20 @@ public class Trend {
         this.agoTime = agoTime;
     }
 
-    public String getImgLink() {
-        return imgLink;
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getArticleLink() {
@@ -102,7 +74,40 @@ public class Trend {
         this.articleLink = articleLink;
     }
 
+    public String getImgLink() {
+        return imgLink;
+    }
+
     public void setImgLink(String imgLink) {
+        this.imgLink = imgLink;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
+    int seq;
+    String keyword;
+    String article;
+    String agoTime;
+    String volume;
+    String date;
+    String articleLink;
+    String imgLink;
+
+    public Trend() {
+
+    }
+
+    @Autowired
+    public Trend(int id, int seq, String keyword, String article, String agoTime, String volume, String date, String articleLink, String imgLink) {
+        this.id = id;
+        this.seq = seq;
+        this.keyword = keyword;
+        this.article = article;
+        this.agoTime = agoTime;
+        this.volume = volume;
+        this.date = date;
+        this.articleLink = articleLink;
         this.imgLink = imgLink;
     }
 

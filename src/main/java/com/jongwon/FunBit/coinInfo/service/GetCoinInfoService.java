@@ -12,6 +12,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -174,6 +176,7 @@ public class GetCoinInfoService {
                 }
             }
         }
+
         coinInfo = new CoinInfo(market, infos.get(0), infos.get(1), infos.get(2));
         driver.quit();
         return coinInfo;

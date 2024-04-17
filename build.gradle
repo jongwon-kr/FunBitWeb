@@ -21,6 +21,8 @@ dependencies {
 	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.19.1'
 	implementation 'org.json:json:20240303'
 	implementation 'org.slf4j:slf4j-api:2.0.12'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.data:spring-data-rest-hal-explorer'
 	implementation 'org.springframework.boot:spring-boot-starter-hateoas'

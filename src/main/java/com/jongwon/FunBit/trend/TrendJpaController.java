@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.MalformedURLException;
 import java.util.List;
 
 @RestController
@@ -25,8 +26,8 @@ public class TrendJpaController {
     }
 
     @GetMapping("/fetch/get-trends")
-    @Scheduled(cron = "0 13 0/1 * * *")
-    public String getTrends() {
+    @Scheduled(cron = "0 10 0/1 * * *")
+    public String getTrends() throws MalformedURLException {
         List<Trend> trends = getTrendsService.getTrends();
         trendRepository.deleteAll();
         for (Trend trend : trends) {

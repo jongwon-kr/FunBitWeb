@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.net.MalformedURLException;
 import java.util.List;
 
 @SpringBootTest
@@ -22,7 +23,7 @@ public class TrendRepositoryTest {
     private GetTrendsService service;
 
     @Test
-    public void getTrends(){
+    public void getTrends() throws MalformedURLException {
         List<Trend> trends = service.getTrends();
         repository.deleteAll();
         for (Trend trend : trends) {

@@ -1,11 +1,14 @@
 package com.jongwon.FunBit.test;
 
+import com.jongwon.FunBit.coinInfo.CoinInfo;
 import com.jongwon.FunBit.trend.Trend;
 import com.jongwon.FunBit.trend.service.GetTrendsService;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +26,13 @@ public class DockerTests {
     private GetTrendsService service;
 
     @Test
-    public void nameTest() throws RuntimeException, MalformedURLException {
+    @Transactional
+    public void getTrends() throws RuntimeException, MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("chrome");
 
-
         WebDriver driver = new RemoteWebDriver(new URL(" http://localhost:4444"), capabilities);
+        driver.get("https://example.com");
 
         driver.get("https://trends.google.co.kr/trends/trendingsearches/daily?geo=KR&hl=ko");
         Actions actions = new Actions(driver);
@@ -59,8 +64,80 @@ public class DockerTests {
                 throw new RuntimeException(e);
             }
             selectElement.click();
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            String imgLink;
+            String articleLink;
+            String quot;
+            String findLink;
+            if (trendOption.get(2).contains("\'")) {
+                quot = "\"";
+            } else if (trendOption.get(2).contains("\"")) {
+                quot = "\'";
+            } else {
+                quot = "\"";
+
+            }
+            findLink = quot + trendOption.get(2) + quot;
+            if (trendOption.get(2).contains("\"") && trendOption.get(2).contains("\'")) {
+                quot = "\"";
+                findLink = quot + trendOption.get(2).split("\"")[0] + quot;
+            }
+
+            try {
+                imgLink = todayElement
+                        .findElement(By.xpath("//a[contains(@title, " + findLink + ")]"))
+                        .findElement(By.xpath("//div[@class='carousel-image-wrapper']"))
+                        .findElement(By.tagName("img"))
+                        .getAttribute("src");
+            } catch (NoSuchElementException e) {
+                imgLink = "noimg";
+                System.out.println("이미지가 없습니다..");
+            }
+            articleLink = todayElement
+                    .findElement(By.xpath("//a[contains(@title, " + findLink + ")]"))
+                    .getAttribute("href");
+            Trend trend = new Trend();
+            LocalDate currentDate = LocalDate.now();
+
+            // 년, 월, 일 한 번에 얻기
+            int year = currentDate.getYear();
+            int month = currentDate.getMonthValue();
+            int day = currentDate.getDayOfMonth();
+
+            // 원하는 형식으로 조합하여 문자열 만들기
+            String formattedDate = String.format("%04d-%02d-%02d", year, month, day);
+
+            trend.setSeq(Integer.parseInt(trendOption.get(0)));
+            trend.setKeyword(trendOption.get(1));
+            trend.setArticle(trendOption.get(2));
+            trend.setAgoTime(trendOption.get(3));
+            trend.setVolume(trendOption.get(4));
+            trend.setDate(formattedDate);
+            trend.setArticleLink(articleLink);
+            trend.setImgLink(imgLink);
+            System.out.println(trend.toString());
+            trends.add(trend);
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 100);");
+            selectElement.click();
         }
+
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        //페이지 이동
+        driver.quit();
     }
 
 }
-
