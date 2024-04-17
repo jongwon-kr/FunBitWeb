@@ -49,15 +49,15 @@
 #### TODOLIST 화면
 - JPA로 get, post, delete, put mapping을 통해 서버에서 API 호출을 통한 CRUD 구현
 <img src="https://github.com/jongwon-kr/JWeb-server/assets/76871947/522376ec-96c2-4e98-9d24-932b36ecb893" width="750" height="400">
-- delete는 TODO를 완료했다고 표시
+#### delete는 TODO를 완료했다고 표시
 <img src="https://github.com/jongwon-kr/JWeb-server/assets/76871947/56f06c07-1598-48e8-b701-e4aac256b9e1" width="750" height="400">
-- Learn Flutter -> LearnFlutter22222로 업데이트
+#### Learn Flutter -> LearnFlutter22222로 업데이트
 <img src="https://github.com/jongwon-kr/JWeb-server/assets/76871947/5b4685b5-1ec5-41a2-9046-34b0d2a0f8bd" width="750" height="400">
 <img src="https://github.com/jongwon-kr/JWeb-server/assets/76871947/74a59fa6-8610-4e03-9d1d-7bf7efeb0213" width="750" height="400">
- - 추가를 하거나 업데이트 시 너무짧거나 빈칸은 불가능
+#### 추가를 하거나 업데이트 시 너무짧거나 빈칸은 불가능
 <img src="https://github.com/jongwon-kr/JWeb-server/assets/76871947/a5e03e0b-f9f7-40aa-a1b4-afe5fc2a8816" width="750" height="400">
 <img src="https://github.com/jongwon-kr/JWeb-server/assets/76871947/d586da69-a262-4e47-b6ef-2ce834f370dd" width="750" height="400">
-- 여행 준비하기 추가 확인
+#### 여행 준비하기 추가 확인
 <img src="https://github.com/jongwon-kr/JWeb-server/assets/76871947/cc8b8b2d-97a5-4c64-8d01-3d0e88a2c107" width="750" height="400">
 <img src="https://github.com/jongwon-kr/JWeb-server/assets/76871947/df1d5f40-6fbe-4e5b-9d7a-cd0a0268e731" width="750" height="400">
 
