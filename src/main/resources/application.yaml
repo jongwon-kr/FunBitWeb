@@ -13,7 +13,7 @@ spring:
   application:
     name: FunBit
   datasource:
-    url: jdbc:mysql://mysql:3306/${RDS_DB_NAME:social-media-database}
+    url: jdbc:mysql://localhost:3306/${RDS_DB_NAME:social-media-database}
     username: ${RDS_USERNAME:social-media-user}
     password: ${RDS_PASSWORD:dummypassword}
   jpa:

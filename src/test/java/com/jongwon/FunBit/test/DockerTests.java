@@ -1,14 +1,10 @@
 package com.jongwon.FunBit.test;
 
-import com.jongwon.FunBit.coinInfo.CoinInfo;
-import com.jongwon.FunBit.trend.Trend;
-import com.jongwon.FunBit.trend.service.GetTrendsService;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import com.jongwon.FunBit.Entity.Trend;
+import com.jongwon.FunBit.service.GetTrendsService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;

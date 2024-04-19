@@ -1,13 +1,12 @@
 package com.jongwon.FunBit.trend.repository;
 
-import com.jongwon.FunBit.trend.Trend;
-import com.jongwon.FunBit.trend.service.GetTrendsService;
+import com.jongwon.FunBit.repository.TrendRepository;
+import com.jongwon.FunBit.Entity.Trend;
+import com.jongwon.FunBit.service.GetTrendsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.MalformedURLException;
 import java.util.List;
