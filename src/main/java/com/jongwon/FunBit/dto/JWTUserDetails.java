@@ -7,11 +7,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayDeque;
 import java.util.Collection;
 
-public class JwtUserDetails implements UserDetails {
+public class JWTUserDetails implements UserDetails {
 
     private final User user;
 
-    public JwtUserDetails(User user) {
+    public JWTUserDetails(User user) {
         this.user = user;
     }
 

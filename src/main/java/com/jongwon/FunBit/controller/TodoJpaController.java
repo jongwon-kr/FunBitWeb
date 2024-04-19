@@ -4,6 +4,7 @@ package com.jongwon.FunBit.controller;
 import com.jongwon.FunBit.Entity.Todo;
 import com.jongwon.FunBit.repository.TodoRepository;
 import com.jongwon.FunBit.service.TodoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ public class TodoJpaController {
 	
 	private TodoRepository todoRepository;
 
+	@Autowired
 	public TodoJpaController(TodoService todoService, TodoRepository todoRepository) {
 		this.todoService = todoService;
 		this.todoRepository = todoRepository;

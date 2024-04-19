@@ -20,4 +20,20 @@ public class Trend {
     String date;
     String articleLink;
     String imgLink;
+
+    public Trend(int id, int seq, String keyword, String article, String agoTime, String volume, String date, String articleLink, String imgLink) {
+        this.id = id;
+        this.seq = seq;
+        this.keyword = keyword;
+        this.article = article;
+        this.agoTime = agoTime;
+        this.volume = volume;
+        this.date = date;
+        this.articleLink = articleLink;
+        this.imgLink = imgLink;
+    }
+
+    public Trend() {
+
+    }
 }
