@@ -29,20 +29,20 @@ public class CoinInfoJpaController {
     }
 
     // 코인 정보 요청
-    @GetMapping("/coin-info/{market}")
+    @GetMapping("/coinInfo/{market}")
     public CoinInfo retrieveCoinInfo(@PathVariable String market) {
 
         return getCoinInfoService.getCoinInfo(market);
 
     }
 
-    @DeleteMapping("/coinInfos/{market}")
+    @DeleteMapping("/coinInfo/{market}")
     public ResponseEntity<Void> deleteCoinInfo(@PathVariable String market) {
         coinInfoRepository.deleteById(market);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/coinInfos/add/{market}")
+    @GetMapping("/coinInfo/add/{market}")
     public String addCoinInfo(@PathVariable String market) {
         try {
             CoinInfo coinInfo = getCoinInfoService.getCoinInfo(market);
@@ -54,7 +54,7 @@ public class CoinInfoJpaController {
     }
 
     // 모든 코인 정보들 패치
-    @GetMapping("/fetch/coinInfos")
+    @GetMapping("/coinInfo/fetch")
     public String fetchCoinInfos() {
         try {
             List<CoinInfo> coinInfoList = getCoinInfoService.getCoinInfos();

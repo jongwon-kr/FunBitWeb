@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -47,6 +48,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http
+                .csrf((auth) -> auth.disable());
+        http
+                .formLogin((auth) -> auth.disable());
+        http
+                .httpBasic((auth) -> auth.disable());
+        http
+                .oauth2Login(Customizer.withDefaults());
         // Security 단 cors처리
         http
                 .cors((cors) -> cors.configurationSource(new CorsConfigurationSource() {
@@ -65,19 +75,11 @@ public class SecurityConfig {
                         return configuration;
                     }
                 }));
-
-        http
-                .csrf((auth) -> auth.disable());
-
-        http
-                .formLogin((auth) -> auth.disable());
-
-        http
-                .httpBasic((auth) -> auth.disable());
-
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/signup").permitAll()
+                        .requestMatchers("/login", "/signup").permitAll()
+                        .requestMatchers("/coinInfo/*", "/trend/*").permitAll()
+                        .requestMatchers("/", "/oauth2/**", "/login/**").permitAll()
                         .anyRequest().authenticated());
         // JWTFilter
         http

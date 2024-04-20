@@ -26,7 +26,7 @@ public class TrendJpaController {
         this.getTrendsService = getTrendsService;
     }
 
-    @GetMapping("/fetch/get-trends")
+    @GetMapping("/trend/fetch")
     @Scheduled(cron = "0 10 0/1 * * *")
     public String getTrends() throws MalformedURLException {
         List<Trend> trends = getTrendsService.getTrends();
@@ -37,7 +37,7 @@ public class TrendJpaController {
         return "Trends 불러오기 완료";
     }
 
-    @GetMapping("/get-trends/{date}")
+    @GetMapping("/trend/{date}")
     public List<Trend> getTodayTrends(@PathVariable String date) {
         return trendRepository.findByDate(date);
     }
