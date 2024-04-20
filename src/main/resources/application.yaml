@@ -6,7 +6,7 @@ server:
 
 spring:
   jwt:
-    secretkey: dsfkljwelkvoidflfkewhqklkdhviwelndmnvkdlhfjiepowrlkwenrdkfvkdskfnsdafdf
+    secretkey: 암호키(어느정도 길면 좋음)
   security:
     oauth2:
       client:
@@ -19,21 +19,21 @@ spring:
         registration:
           naver:
             client-name: naver
-            client-id: F1qDuKUqudsT1LsTNbih
-            client-secret: D5LqcNQp66
+            client-id: naver 개발자 센터에서 발급받은 ID
+            client-secret: naver 개발자 센터에서 발급받은 KEY
             redirect-uri: http://localhost:5000/login/oauth2/code/naver
             authorization-grant-type: authorization_code
             scope: name,email
           google:
             client-name: google
-            client-id: 78386567660-50ao0c7hihes1musijbinlrdvboojc19.apps.googleusercontent.com
-            client-secret: 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
+            client-id: Google Cloud에서 발급받은 ID
+            client-secret: Google Cloud에서 발급받은 KEY
             redirect-uri: http://localhost:5000/login/oauth2/code/google
             authorization-grant-type: authorization_code
             scope: profile,email
     user:
-      name: jongwon
-      password: 1234
+      name: name
+      password: password
   main:
     banner-mode: off
   application:
