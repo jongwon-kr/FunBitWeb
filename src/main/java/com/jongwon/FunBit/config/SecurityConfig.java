@@ -60,6 +60,7 @@ public class SecurityConfig {
                 .httpBasic((auth) -> auth.disable());
         http
                 .oauth2Login((auth) -> auth
+                        .loginPage("/login")
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                                 .userService(jwtOAuth2UserService)));
         // Security 단 cors처리
