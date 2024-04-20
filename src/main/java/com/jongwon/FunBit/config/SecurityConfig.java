@@ -3,6 +3,7 @@ package com.jongwon.FunBit.config;
 import com.jongwon.FunBit.jwt.JWTFilter;
 import com.jongwon.FunBit.jwt.JWTLoginFilter;
 import com.jongwon.FunBit.jwt.JWTUtil;
+import com.jongwon.FunBit.service.JwtOAuth2UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,10 +28,12 @@ public class SecurityConfig {
     //AuthenticationManager가 인자로 받을 AuthenticationConfiguraion 객체 생성자 주입
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
+    private final JwtOAuth2UserService jwtOAuth2UserService;
 
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil) {
+    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, JwtOAuth2UserService jwtOAuth2UserService) {
         this.authenticationConfiguration = authenticationConfiguration;
         this.jwtUtil = jwtUtil;
+        this.jwtOAuth2UserService = jwtOAuth2UserService;
     }
 
     //AuthenticationManager Bean 등록
@@ -56,7 +59,9 @@ public class SecurityConfig {
         http
                 .httpBasic((auth) -> auth.disable());
         http
-                .oauth2Login(Customizer.withDefaults());
+                .oauth2Login((auth) -> auth
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+                                .userService(jwtOAuth2UserService)));
         // Security 단 cors처리
         http
                 .cors((cors) -> cors.configurationSource(new CorsConfigurationSource() {
