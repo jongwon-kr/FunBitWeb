@@ -2,7 +2,7 @@ package com.jongwon.FunBit.service;
 
 import com.jongwon.FunBit.Entity.EmailUser;
 import com.jongwon.FunBit.dto.GoogleResponse;
-import com.jongwon.FunBit.dto.JwtOAuth2User;
+import com.jongwon.FunBit.dto.JWTOAuth2User;
 import com.jongwon.FunBit.dto.NaverResponse;
 import com.jongwon.FunBit.dto.OAuth2Response;
 import com.jongwon.FunBit.repository.EmailUserRepository;
@@ -62,6 +62,6 @@ public class JwtOAuth2UserService extends DefaultOAuth2UserService {
 
             emailUserRepository.save(existData);
         }
-        return new JwtOAuth2User(oAuth2Response, role);
+        return new JWTOAuth2User(oAuth2Response, role);
     }
 }

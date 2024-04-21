@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-public class JwtOAuth2User implements OAuth2User {
+public class JWTOAuth2User implements OAuth2User {
     private final OAuth2Response oAuth2Response;
     private final String role;
 
-    public JwtOAuth2User(OAuth2Response oAuth2Response, String role) {
+    public JWTOAuth2User(OAuth2Response oAuth2Response, String role) {
         this.oAuth2Response = oAuth2Response;
         this.role = role;
     }

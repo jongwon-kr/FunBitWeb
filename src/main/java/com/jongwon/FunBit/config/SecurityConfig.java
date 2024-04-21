@@ -2,7 +2,9 @@ package com.jongwon.FunBit.config;
 
 import com.jongwon.FunBit.jwt.JWTFilter;
 import com.jongwon.FunBit.jwt.JWTLoginFilter;
+import com.jongwon.FunBit.jwt.JWTOAuth2Filter;
 import com.jongwon.FunBit.jwt.JWTUtil;
+import com.jongwon.FunBit.oauth2.JWTSuccessHandler;
 import com.jongwon.FunBit.service.JwtOAuth2UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
@@ -30,11 +32,13 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
     private final JwtOAuth2UserService jwtOAuth2UserService;
+    private final JWTSuccessHandler jwtSuccessHandler;
 
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, JwtOAuth2UserService jwtOAuth2UserService) {
+    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, JwtOAuth2UserService jwtOAuth2UserService, JWTSuccessHandler jwtSuccessHandler) {
         this.authenticationConfiguration = authenticationConfiguration;
         this.jwtUtil = jwtUtil;
         this.jwtOAuth2UserService = jwtOAuth2UserService;
+        this.jwtSuccessHandler = jwtSuccessHandler;
     }
 
     //AuthenticationManager Bean 등록
@@ -63,7 +67,8 @@ public class SecurityConfig {
                 .oauth2Login((auth) -> auth
                         .loginPage("/login")
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
-                                .userService(jwtOAuth2UserService)));
+                                .userService(jwtOAuth2UserService))
+                        .successHandler(jwtSuccessHandler));
         // Security 단 cors처리
         http
                 .cors((cors) -> cors.configurationSource(new CorsConfigurationSource() {
@@ -88,6 +93,8 @@ public class SecurityConfig {
                         .requestMatchers("/", "/oauth2/**", "/login/**").permitAll()
                         .anyRequest().authenticated());
         // JWTFilter
+        http
+                .addFilterBefore(new JWTOAuth2Filter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), JWTLoginFilter.class);
 

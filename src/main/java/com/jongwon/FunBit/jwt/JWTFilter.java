@@ -1,8 +1,8 @@
 package com.jongwon.FunBit.jwt;
 
 import com.jongwon.FunBit.Entity.User;
-import com.jongwon.FunBit.config.SecurityConfig;
 import com.jongwon.FunBit.dto.JWTUserDetails;
+import com.jongwon.FunBit.dto.UserDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -71,7 +71,6 @@ public class JWTFilter extends OncePerRequestFilter {
         // User 생성
         User user = new User();
         user.setUsername(username);
-        user.setPassword("temppassword");
         user.setRole(role);
 
         // UserDetails에 User 객체 추가
