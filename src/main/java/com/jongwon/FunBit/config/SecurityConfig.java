@@ -2,7 +2,7 @@ package com.jongwon.FunBit.config;
 
 import com.jongwon.FunBit.jwt.JWTFilter;
 import com.jongwon.FunBit.jwt.JWTLoginFilter;
-import com.jongwon.FunBit.jwt.JWTOAuth2Filter;
+import com.jongwon.FunBit.oauth2.JWTOAuth2Filter;
 import com.jongwon.FunBit.jwt.JWTUtil;
 import com.jongwon.FunBit.oauth2.JWTSuccessHandler;
 import com.jongwon.FunBit.service.JwtOAuth2UserService;
@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -82,6 +81,7 @@ public class SecurityConfig {
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
                         configuration.setMaxAge(3600L);
 
+                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
                         configuration.setExposedHeaders(Collections.singletonList("Authorization"));
 
                         return configuration;
@@ -89,8 +89,9 @@ public class SecurityConfig {
                 }));
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers( "/signup").permitAll()
-                        .requestMatchers("/", "/oauth2/**", "/login/**").permitAll()
+                        .requestMatchers("/signup").permitAll()
+                        .requestMatchers("/", "/oauth2/**", "/login/**","/login").permitAll()
+                        .requestMatchers("/trend/**").permitAll()
                         .anyRequest().authenticated());
         // JWTFilter
         http

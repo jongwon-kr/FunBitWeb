@@ -1,9 +1,10 @@
-package com.jongwon.FunBit.jwt;
+package com.jongwon.FunBit.oauth2;
 
 import com.jongwon.FunBit.dto.JWTOAuth2User;
 import com.jongwon.FunBit.dto.JWTOAuth2UserDetails;
 import com.jongwon.FunBit.dto.JWTUserDetails;
 import com.jongwon.FunBit.dto.UserDTO;
+import com.jongwon.FunBit.jwt.JWTUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
