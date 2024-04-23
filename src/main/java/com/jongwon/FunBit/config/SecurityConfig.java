@@ -90,8 +90,9 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/signup").permitAll()
-                        .requestMatchers("/", "/oauth2/**", "/login/**","/login").permitAll()
+                        .requestMatchers("/", "/oauth2/**", "/login/**", "/login").permitAll()
                         .requestMatchers("/trend/**").permitAll()
+                        .requestMatchers("/reissue").permitAll()
                         .anyRequest().authenticated());
         // JWTFilter
         http
