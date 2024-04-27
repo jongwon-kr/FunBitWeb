@@ -31,9 +31,7 @@ public class CoinInfoJpaController {
     // 코인 정보 요청
     @GetMapping("/coinInfo/{market}")
     public CoinInfo retrieveCoinInfo(@PathVariable String market) {
-
         return getCoinInfoService.getCoinInfo(market);
-
     }
 
     @DeleteMapping("/coinInfo/{market}")

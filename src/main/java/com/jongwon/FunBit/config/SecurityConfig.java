@@ -5,6 +5,7 @@ import com.jongwon.FunBit.jwt.JWTLoginFilter;
 import com.jongwon.FunBit.oauth2.JWTOAuth2Filter;
 import com.jongwon.FunBit.jwt.JWTUtil;
 import com.jongwon.FunBit.oauth2.JWTSuccessHandler;
+import com.jongwon.FunBit.repository.RefreshRepository;
 import com.jongwon.FunBit.service.JwtOAuth2UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
@@ -32,12 +33,14 @@ public class SecurityConfig {
     private final JWTUtil jwtUtil;
     private final JwtOAuth2UserService jwtOAuth2UserService;
     private final JWTSuccessHandler jwtSuccessHandler;
+    private final RefreshRepository refreshRepository;
 
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, JwtOAuth2UserService jwtOAuth2UserService, JWTSuccessHandler jwtSuccessHandler) {
+    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil, JwtOAuth2UserService jwtOAuth2UserService, JWTSuccessHandler jwtSuccessHandler, RefreshRepository refreshRepository) {
         this.authenticationConfiguration = authenticationConfiguration;
         this.jwtUtil = jwtUtil;
         this.jwtOAuth2UserService = jwtOAuth2UserService;
         this.jwtSuccessHandler = jwtSuccessHandler;
+        this.refreshRepository = refreshRepository;
     }
 
     //AuthenticationManager Bean 등록
@@ -102,7 +105,7 @@ public class SecurityConfig {
 
         //필터 추가 LoginFilter()는 인자를 받음 (AuthenticationManager() 메소드에 authenticationConfiguration 객체를 넣어야 함) 따라서 등록 필요
         http
-                .addFilterAt(new JWTLoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(new JWTLoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, refreshRepository), UsernamePasswordAuthenticationFilter.class);
         http
                 .addFilterAfter(new JWTFilter(jwtUtil), OAuth2AuthorizationCodeGrantFilter.class);
 
