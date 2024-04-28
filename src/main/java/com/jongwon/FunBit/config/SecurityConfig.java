@@ -2,6 +2,7 @@ package com.jongwon.FunBit.config;
 
 import com.jongwon.FunBit.jwt.JWTFilter;
 import com.jongwon.FunBit.jwt.JWTLoginFilter;
+import com.jongwon.FunBit.jwt.JWTLogoutFilter;
 import com.jongwon.FunBit.oauth2.JWTOAuth2Filter;
 import com.jongwon.FunBit.jwt.JWTUtil;
 import com.jongwon.FunBit.oauth2.JWTSuccessHandler;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationCodeGrantFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -106,6 +108,8 @@ public class SecurityConfig {
         //필터 추가 LoginFilter()는 인자를 받음 (AuthenticationManager() 메소드에 authenticationConfiguration 객체를 넣어야 함) 따라서 등록 필요
         http
                 .addFilterAt(new JWTLoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, refreshRepository), UsernamePasswordAuthenticationFilter.class);
+        http
+                .addFilterBefore(new JWTLogoutFilter(jwtUtil, refreshRepository), LogoutFilter.class);
         http
                 .addFilterAfter(new JWTFilter(jwtUtil), OAuth2AuthorizationCodeGrantFilter.class);
 
