@@ -1,8 +1,6 @@
 package com.jongwon.FunBit.oauth2;
 
-import com.jongwon.FunBit.dto.JWTOAuth2User;
 import com.jongwon.FunBit.dto.JWTOAuth2UserDetails;
-import com.jongwon.FunBit.dto.JWTUserDetails;
 import com.jongwon.FunBit.dto.UserDTO;
 import com.jongwon.FunBit.jwt.JWTUtil;
 import jakarta.servlet.FilterChain;
@@ -16,27 +14,24 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class JWTOAuth2Filter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
 
     public JWTOAuth2Filter(JWTUtil jwtUtil) {
-
         this.jwtUtil = jwtUtil;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
         //cookie들을 불러온 뒤 Authorization Key에 담긴 쿠키를 찾음
         String authorization = null;
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-
             System.out.println(cookie.getName());
             if (cookie.getName().equals("Authorization")) {
-
                 authorization = cookie.getValue();
             }
         }

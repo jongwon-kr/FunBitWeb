@@ -27,7 +27,7 @@ public class SignupService {
         if (isExist) {
             return;
         }
-
+        System.out.println("??");
         User user = new User();
         user.setUsername(username);
         // 비밀번호 암호화

@@ -26,6 +26,7 @@ public class TrendJpaController {
         this.getTrendsService = getTrendsService;
     }
 
+    // 인기 검색어 fetch
     @GetMapping("/trend/fetch")
     @Scheduled(cron = "0 10 0/1 * * *")
     public String getTrends() throws MalformedURLException {

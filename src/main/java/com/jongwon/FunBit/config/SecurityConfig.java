@@ -99,9 +99,6 @@ public class SecurityConfig {
                         .requestMatchers("/trend/**").permitAll()
                         .requestMatchers("/reissue").permitAll()
                         .anyRequest().authenticated());
-        // JWTFilter
-        http
-                .addFilterBefore(new JWTOAuth2Filter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), JWTLoginFilter.class);
 
