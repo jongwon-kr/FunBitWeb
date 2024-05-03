@@ -99,16 +99,16 @@ public class SecurityConfig {
                         .requestMatchers("/trend/**").permitAll()
                         .requestMatchers("/reissue").permitAll()
                         .anyRequest().authenticated());
-        http
-                .addFilterBefore(new JWTFilter(jwtUtil), JWTLoginFilter.class);
+//        http
+//                .addFilterBefore(new JWTFilter(jwtUtil), JWTLoginFilter.class);
 
         //필터 추가 LoginFilter()는 인자를 받음 (AuthenticationManager() 메소드에 authenticationConfiguration 객체를 넣어야 함) 따라서 등록 필요
         http
                 .addFilterAt(new JWTLoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, refreshRepository), UsernamePasswordAuthenticationFilter.class);
         http
                 .addFilterBefore(new JWTLogoutFilter(jwtUtil, refreshRepository), LogoutFilter.class);
-        http
-                .addFilterAfter(new JWTFilter(jwtUtil), OAuth2AuthorizationCodeGrantFilter.class);
+//        http
+//                .addFilterAfter(new JWTFilter(jwtUtil), OAuth2AuthorizationCodeGrantFilter.class);
 
         http
                 .sessionManagement((session) -> session
